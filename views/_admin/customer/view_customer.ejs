@@ -1,0 +1,120 @@
+<%- include('../section/header') -%>
+
+
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/manager/dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="#">User List</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <center>
+            <h1 class="card-title">Client Lists</h4>
+        </center>
+        <style>
+            .btn-outline-fail {
+                color: #ec5541;
+                background-color: transparent;
+                background-image: none;
+                border-color: #ec5541;
+                width: 120px;
+            }
+        </style>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Client Lists</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+
+                                        <tr>
+
+                                            <td> ID </td>
+                                            <td> Full Name </td>
+                                            <td> Phone Number </td>
+                                            <td> Email Address </td>
+                                            <td> Account Number </td>
+                                            <td> Account Type </td>
+                                            <td> Account Balance </td>
+                                            <td> Account Status </td>
+                                            <td colspan="2"> Operations </td>
+                                        </tr>
+                                        <% Customer.forEach(function(customerValues, customerKey) { %>
+                                            <tr>
+                                                <td> <%= customerKey + 1 %></td>
+                                                <td>
+                                                    <%= customerValues.input_first_name + " "
+                                                        +customerValues.input_last_name %>
+                                                </td>
+                                                </td>
+                                                <td>
+                                                    <%= customerValues.input_email %>
+                                                </td>
+                                                <td>
+                                                    <%= customerValues.input_phone_number %>
+                                                </td>
+
+                                                <td>
+                                                    <%= customerValues.account_number %>
+                                                </td>
+
+                                                <td><%= customerValues.account_name %></td>
+                                                <td>
+                                                    <%= new Intl.NumberFormat("en-US", { style: "currency" ,
+                                                        currency: "USD" }).format( customerValues.account_balance, ), %>
+                                                </td>
+                                                <td>
+                                                    <% if(customerValues.status==0 || customerValues.status=='inactive'
+                                                        ) { %>
+                                                        <font color="red">
+                                                            <% "ALPHABET" .toLowerCase() %>
+                                                        </font>
+
+                                                        <% } else { %>
+                                                            <font color="green">
+                                                                <% "ALPHABET" .toLowerCase() %>
+                                                            </font>
+                                                            <% } %>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/edit/customer/<%= customerValues.id %>"
+                                                        class="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-opacity-50">
+                                                        EDIT
+                                                    </a>
+                                                    <button type="submit" onclick="confirmDelete()"
+                                                        class="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-red-200 focus:ring-opacity-50">
+                                                        DELETE</button>
+
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+                                            <% }) %>
+                                                </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+
+    <%- include ('../section/footer') -%>
+
+
+        </body>
+
+        </html>

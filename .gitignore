@@ -1,0 +1,6 @@
+Vagrantfile
+/www/phpmyadmin
+.vagrant/
+.env/
+.git/
+node_modules/

@@ -1,0 +1,74 @@
+
+<!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+    <div class="copyright">
+        <p>Copyright &copy; Designed & Developed by Client
+                {{ now()->year }}
+        </p>
+    </div>
+</div>
+<!--**********************************
+            Footer end
+        ***********************************-->
+</div>
+<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+<!--**********************************
+        Scripts
+    ***********************************-->
+    
+<%- include('../../_script/script') -%>
+
+<script>
+
+    function confirmApproval(hashId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes, Approve Loan!`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('approveLoan' +hashId).submit();
+            }
+        }
+        )
+    }
+
+
+    function confirmDelete(userId, itemType) {
+console.log(itemType)
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes, delete ${itemType}!`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('deleteForm'+ userId).submit();
+
+                Swal.fire({                    
+                    title: "Deleted!",
+                    text: `${itemType} has been deleted.`,
+                    icon: "success"
+                });
+            }
+        });
+    }
+
+</script>
+
+</body>
+
+</html>

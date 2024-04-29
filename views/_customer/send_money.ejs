@@ -1,0 +1,63 @@
+<%- include('include/header') -%>;
+
+    <!--**********************************
+            Content body start
+        ***********************************-->
+
+    <div class="content-body">
+
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+
+        <div class="container-fluid">
+            <div class="basic-form">
+
+                <% if(errorMessage && errorMessage.length> 0) { %>
+                    <div class="alert alert-danger alert-dismissible show" role="alert">
+                        <strong>Failed!</strong>
+                        <%= errorMessage %>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                    </div>
+                    <% } %>
+
+
+                        <form action="/customer/send/money" method="post">
+
+                            <b>TO:</b>
+                            <br>
+                            <br>
+                            <i class="fa fa-user"></i><input class="form-control" type="text" size="50" name="acc_num"
+                                value="" placeholder="Enter Account Number">
+                            <br>
+                            <br>
+                            <b>Amount:</b>
+                            <br>
+                            <br>
+                            <input class="form-control" type="number" size="30" name="amount" value="" placeholder="$0">
+                            <br>
+                            <br>
+
+                            <button type="submit" class="btn btn-dark mb-2">Send</button>
+
+                        </form>
+            </div>
+
+        </div>
+
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </body>
+    <%- include('include/footer') -%>;
