@@ -45,6 +45,7 @@
 
     function confirmDelete(userId, itemType) {
 console.log(itemType)
+console.log(userId)
 
         Swal.fire({
             title: "Are you sure?",
@@ -61,8 +62,9 @@ console.log(itemType)
                 Swal.fire({                    
                     title: "Deleted!",
                     text: `${itemType} has been deleted.`,
-                    icon: "success"
+                    icon: "success",
                 });
+
             }
         });
     }

@@ -12,30 +12,28 @@ module.exports = () => {
     console.log(admin) 
     done(null, admin._id)
   });
-  passport.deserializeUser((id, done) => {
-    Admin.findById(id, (err, admin) => {
-     
-      done(err, admin)
-    })
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const admin = await Admin.findById(id).exec();
+      done(null, admin);
+    } catch (err) {
+      done(err)
+    }
   })
   
   passport.use("local", new LocalStrategy({
     usernameField: 'input_email',
     passwordField: 'hash'
-  }, function(input_email, hash, done) {
-    Admin.findOne({
-      input_email: input_email
-    }, function(err, admin) {
-      if (err) {
-        return done(err);
-      }
+  },async function(input_email, hash, done) {
+    try {
+      const admin = await Admin.findOne({input_email: input_email}).exec();
       if (!admin) {
         return done(null, false, {
           message: 'No user has the email'
         });
       }
-
-      admin.checkAdminPassword(hash, function(err, isMatch) {
+     admin.checkAdminPassword(hash, function(err, isMatch) {
 
         if (err) {
           return done(err);
@@ -48,9 +46,9 @@ module.exports = () => {
             message: "Invalid Password"
           });
         }
-
       });
-    });
+    } catch (err) {
+      return done(err);
+    }
   }));
 };
-

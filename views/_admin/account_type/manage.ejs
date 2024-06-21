@@ -1,75 +1,96 @@
 <%- include('../section/header') -%>
 
-<div class="content-body">
+    <div class="content-body">
 
-    <div class="row page-titles mx-0">
-        <div class="col p-md-0">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/manager/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item active"><a href="#">User List</a></li>
-            </ol>
+        <div class="row page-titles mx-0">
+            <div class="col p-md-0">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/manager/dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="#">User List</a></li>
+                </ol>
+            </div>
         </div>
-    </div>
-    <!-- row -->
-    <center>
-        <h1 class="card-title">Employee Reporting Time </h1>
-    </center>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Employee Reporting Time </h4>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered zero-configuration">
-                                <thead>
+        <!-- row -->
+        <center>
+            <h1 class="card-title">Employee Reporting Time </h1>
+        </center>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Employee Reporting Time </h4>
+                            <div class="table-responsive">
+                                <% if(successMessage && successMessage.length> 0) { %>
+                                    <div class="alert alert-success alert-dismissible show" role="alert">
+                                        <strong>Successful!</strong>
+                                        <%= successMessage %>
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    </div>
+                                    <% } %>
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                            <thead>
 
-                                    <tr>
-                                        <td> S/N </td>
-                                        <td> Account Name</td>
-                                        <td> Minimum Opening Balance</td>
-                                        <td> Maximum Opening Balance</td>
-                                        <td> Expected Minimum Balance</td>
-                                        <td> Expected Maximum Balance</td>
-                                        <td>Action</td>
-                                    </tr>
-                   
-                                    <tr>
-                                        <td>  1}} </td>
-                                        <td> {'account_name']}} </td>
-                                        <td> 'minimum_opening_balance']}} </td>
-                                        <td> maximum_opening_balance']}} </td>
-                                        <td> expected_minimum_balance']}} </td>
-                                        <td> 'expected_maximum_balance']}} </td>
-                                        <td class="px-4 ру-2">
-                                        <a href="{{ route('admin.edit.account.type', $accountTypeValue->hash_id) }}"
-   class="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-opacity-50">
-   UPDATE
-</a>
+                                                <tr>
+                                                    <td> S/N </td>
+                                                    <td> Account Name</td>
+                                                    <td> Minimum Opening Balance</td>
+                                                    <td> Maximum Opening Balance</td>
+                                                    <td> Expected Minimum Balance</td>
+                                                    <td> Expected Maximum Balance</td>
+                                                    <td>Action</td>
+                                                </tr>
+                                                <% AccountTy.forEach(function(accountTypeValue, accountTypeKey){ %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= accountTypeKey + 1 %>
+                                                        </td>
+                                                        <td>
+                                                            <%= accountTypeValue.account_name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= accountTypeValue.minimum_opening_balance %>
+                                                        </td>
+                                                        <td>
+                                                            <%= accountTypeValue.maximum_opening_balance %>
+                                                        </td>
+                                                        <td>
+                                                            <%= accountTypeValue.expected_minimum_balance %>
+                                                        </td>
+                                                        <td>
+                                                            <%= accountTypeValue.expected_maximum_balance %>
+                                                        </td>
+                                                        <td class="px-4 ру-2">
+                                                            <a href="/admin/edit/account/type/<%= accountTypeValue._id  %>"
+                                                                class="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-opacity-50">
+                                                                UPDATE
+                                                            </a>
+                                                            <button type="submit"
+                                                                onclick="confirmDelete('<%= accountTypeValue._id  %>', '<%= accountTypeValue.account_name  %>')"
+                                                                class="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-red-200 focus:ring-opacity-50">
+                                                                DELETE
+                                                            </button>
 
 
-                        <button type="submit" onclick="confirmDelete()"
-                            class="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-red-200 focus:ring-opacity-50">
-                            DELETE
-                        </button>
-                        <form action=""
-                            id="">
-                           
-                        </form>
-                        
-                    </td>
-                                    </tr>
+                                                            <form action="/admin/delete/account/type/<%= accountTypeValue._id  %>"
+                                                                method="GET" id="deleteForm<%= accountTypeValue._id  %>">
 
-                                  
-                                    </tfoot>
-                            </table>
+                                                            </form>
+
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+
+                                                        </tfoot>
+                                        </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<%- include('../section/footer') -%>
+    <%- include('../section/footer') -%>

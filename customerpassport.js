@@ -12,11 +12,13 @@ module.exports = () => {
     // console.log(customer)
     done(null, customer._id)
   });
-  passport.deserializeUser((id, done) => {
-    Customer.findById(id, (err, customer) => {
-     
-      done(err, customer)
-    })
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const customer = await Customer.findById(id);
+      done(null, customer);
+    } catch (err) {
+      done(err)
+    }
   })
 
   
@@ -24,20 +26,19 @@ module.exports = () => {
   passport.use("localCustomer", new LocalStrategy({
     usernameField: 'username', // username and password below is from the html form
     passwordField: 'password'
-  }, function(usernameOrEmailOrAccountNumber, passworded, done) {
+  }, async function(usernameOrEmailOrAccountNumber, passworded, done) {
     //usernameOrEmail, passworded are input entered into the form field
     // console.log(usernameOrHash, hash);
-    Customer.findOne({
+try {
+    const customer = await Customer.findOne({
       $or: [
         {input_email: usernameOrEmailOrAccountNumber},
         {account_number: usernameOrEmailOrAccountNumber},
         {input_username: usernameOrEmailOrAccountNumber}
-      ]
-     
-    }, function(err, customer) {
-      if (err) {
-        return done(err);
-      }
+      ]}).exec();
+
+      console.log(customer);
+
       if (!customer) {
         return done(null, false, {
           message: 'No user has the email'
@@ -57,8 +58,9 @@ module.exports = () => {
             message: "Invalid Password"
           });
         }
-
       });
-    });
+    } catch (err) {
+      return done(err);
+    }
   }));
 };

@@ -49,7 +49,9 @@
                                         </tr>
                                         <% Customer.forEach(function(customerValues, customerKey) { %>
                                             <tr>
-                                                <td> <%= customerKey + 1 %></td>
+                                                <td>
+                                                    <%= customerKey + 1 %>
+                                                </td>
                                                 <td>
                                                     <%= customerValues.input_first_name + " "
                                                         +customerValues.input_last_name %>
@@ -66,7 +68,9 @@
                                                     <%= customerValues.account_number %>
                                                 </td>
 
-                                                <td><%= customerValues.account_name %></td>
+                                                <td>
+                                                    <%= customerValues.account_name %>
+                                                </td>
                                                 <td>
                                                     <%= new Intl.NumberFormat("en-US", { style: "currency" ,
                                                         currency: "USD" }).format( customerValues.account_balance, ), %>
@@ -85,14 +89,15 @@
                                                             <% } %>
                                                 </td>
                                                 <td>
-                                                    <a href="/admin/edit/customer/<%= customerValues.id %>"
+                                                    <a href="/admin/edit/customer/<%= customerValues._id %>"
                                                         class="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-opacity-50">
                                                         EDIT
                                                     </a>
-                                                    <button type="submit" onclick="confirmDelete()"
+                                                    <button type="submit"
+                                                        onclick="confirmDelete('<%= customerValues._id %>', '<%= customerValues.input_first_name + ' ' + customerValues.input_last_name  %> ')"
                                                         class="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-red-200 focus:ring-opacity-50">
                                                         DELETE</button>
-
+                                                    <form action="/admin/delete/customer/<%= customerValues._id %>" method="GET" id="deleteForm<%= customerValues._id %>">
                                                     </form>
                                                 </td>
 
