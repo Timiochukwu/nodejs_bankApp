@@ -3,6 +3,8 @@ var router = express.Router();
 
 const LoanType = require('../../models/loan_type');
 const LoanApplication = require('../../models/loan_application');
+const Customer = require('../../models/customer');
+const { log } = require('async');
 
 router.use(function (req, res, next) {
     res.locals.currentUser = req.user;
@@ -14,24 +16,13 @@ router.use(function (req, res, next) {
     res.locals.errorMessage = req.flash("errorMessage");
 
     res.locals.host = req.headers.host;
-
     next();
+
+
 })
 
 
-// router.use(function(req, res, next) {
-//     LoanType.find({}).exec(function(err, loanTypeValues) {
-//         if (err) {
-//             return next(err);
-//         }
-//         // The LoanTypes below is the one that will be passses in the frontend to 
-//         // forEach
-//         res.locals.LoanTypes = loanTypeValues;
-        
-//         next();
-        
-//     })
-// })
+
 
 router.use(async(req, res, next) => {
     try {
@@ -55,6 +46,18 @@ router.use(async (req, res, next) => {
         
     }
 });
+
+// router.use(async (req, res, next) =>{
+//     try {
+//         const customerValue = await Customer.find({}).exec();
+//         res.locals.Customer = customerValue;
+//         console.log(customerValue);
+//         next();
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send('Server Error');
+//     }
+// })
 
 
 router.use("/customer", require("./home"))

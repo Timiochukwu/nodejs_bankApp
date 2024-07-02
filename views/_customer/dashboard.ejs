@@ -21,8 +21,10 @@
                         <div class="card">
                             <div class="stat-widget-one">
                                 <div class="stat-content">
-                                    <div class="stat-text">Balance</div>
-                                    <div class="stat-digit gradient-3-text">BDT </div>
+                                    <div class="stat-text">Full Name</div>
+                                    <div class=" gradient-1-text">
+                                        <b class=" gradient-1-text"><%= currentUser.input_last_name + ", "+ currentUser.input_first_name %></b> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -32,8 +34,10 @@
                         <div class="card">
                             <div class="stat-widget-one">
                                 <div class="stat-content">
-                                    <div class="stat-text">NID Verification</div>
-                                    <div class="stat-digit gradient-4-text"></div>
+                                    <div class="stat-text">Account Balance</div>
+                                    <div class=" gradient-1-text">
+                                        <b class=" gradient-1-text"><%= currentUser.account_balance %></b> 
+                                    </div>
                                 </div>
 
                             </div>
@@ -44,8 +48,10 @@
                         <div class="card">
                             <div class="stat-widget-one">
                                 <div class="stat-content">
-                                    <div class="stat-text">Previous Withdraw</div>
-                                    <div class="stat-digit gradient-4-text"> </div>
+                                    <div class="stat-text">Account Number</div>
+                                    <div class=" gradient-1-text">
+                                        <b class=" gradient-1-text"><%= (currentUser.account_number) %></b> 
+                                    </div>
                                 </div>
 
                             </div>

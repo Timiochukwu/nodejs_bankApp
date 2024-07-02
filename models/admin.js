@@ -20,7 +20,7 @@ var adminSchema = new Schema({
  
 adminSchema.pre('save', function (done) {
     var admin = this;
-    console.log(admin, done, "I GOT HERE");
+    // console.log(admin, done, "I GOT HERE");
 
     if (!admin.isModified('hash')) {
         return done();

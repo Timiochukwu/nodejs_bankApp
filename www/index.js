@@ -18,7 +18,6 @@ var accountType = require('../models/account_type')
 var LoanApplication = require('../models/loan_application')
 
 
-var customerPassport = require('../customerpassport');
 var setUpPassport = require('../setuppassport');
 const { log } = require('console');
 
@@ -32,7 +31,7 @@ db.once('open', function() {
 })
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-customerPassport();
+
 setUpPassport();
 
 

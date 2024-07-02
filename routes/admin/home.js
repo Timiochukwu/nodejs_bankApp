@@ -12,10 +12,31 @@ const accountType = require('../../models/account_type');
 var router = express.Router();
 
 
-router.get('/account/login', function (req, res) {
+function ensureAuthenticated(req, res, next){
+    console.log(req,"I got here");
+    process.exit();
+    if (req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/admin/account/login');
+}
+
+// function checkType(type){
+//     return (req, res, next) => {
+//         if (req.user && req.user.type === type) {
+//             next();
+//         } else {
+//             res.status(403).send('Forbidden')
+//         }
+//     }
+// }
+
+
+router.get('/account/login',ensureAuthenticated, (req, res) => {
     var messages = req.flash("error");
     var success = req.flash("success");
     res.render("_admin/auth/login", { success })
+    
 })
 
 router.post('/account/login', passport.authenticate('local', {
@@ -28,7 +49,7 @@ router.get('/account/register', function (req, res) {
     res.render('_admin/auth/signup')
 })
 
-router.post('/account/register', function (req, res, next) {
+router.post('/account/register', async (req, res, next) => {
     var firstName = req.body.first_name;
     var lastName = req.body.last_name;
     var username = req.body.username;
@@ -43,16 +64,15 @@ router.post('/account/register', function (req, res, next) {
         req.flash("errorPassword", "Password Mismatch");
     }
 
-    Admin.findOne({
-        $or: [
-            { input_username: username },
-            { input_email: email },
-            { input_phone_number: phoneNumber },
-        ]
-    }, function (err, admin) {
-        if (err) {
-            return next(err)
-        }
+    try {
+        const admin = await Admin.findOne({
+            $or: [
+                { input_username: username },
+                { input_email: email },
+                { input_phone_number: phoneNumber },
+            ]
+        })
+
         if (admin) {
             if (admin.input_emaill === email) {
                 req.flash("errorEmail", "Email Already Exist");
@@ -72,12 +92,15 @@ router.post('/account/register', function (req, res, next) {
             input_phone_number: phoneNumber,
             hash: password,
         })
-        newAdmin.save(next);
+        newAdmin.save();
 
         req.flash("success", "Registration Successful, Check your mail to verify your account");
-        res.redirect("/");
+        res.redirect("/admin/dashboard");
 
-    })
+    } catch (err) {
+        return next(err)
+    }
+
 });
 
 // , passport.authenticate('local', {
